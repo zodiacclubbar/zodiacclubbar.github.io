@@ -38,11 +38,8 @@ window.ZODIAC = {
       id: "facebook",
       icon: "facebook",
       title: "Facebook",
-      subtitle: "Coming Soon",
-      url: "",
-      pending: true,
-      badge: "Coming Soon",
-      pendingToast: "Facebook will be added soon."
+      subtitle: "Official Facebook Page",
+      url: "https://www.facebook.com/share/1CPjMNocdK/"
     },
     {
       id: "instagram",
