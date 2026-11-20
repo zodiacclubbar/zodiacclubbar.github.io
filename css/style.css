@@ -740,3 +740,18 @@ body.theme-bar { position: relative; }
 @media (min-width: 720px) {
   .page { padding-top: 36px; }
 }
+
+/* Hotline card above Menu button */
+.hotline-card {
+  margin-top: 24px;
+  border-color: rgba(255, 114, 46, 0.36);
+}
+.hotline-card .hotline-number {
+  color: var(--ink);
+  font-size: 0.94rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.hotline-card + .menu-btn {
+  margin-top: 14px;
+}

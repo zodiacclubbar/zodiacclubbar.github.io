@@ -116,6 +116,18 @@
   /* ----- copy / pending handlers ----- */
   document.addEventListener("click", function (e) {
     var copyBtn = e.target.closest(".copy-btn");
+    if (copyBtn && copyBtn.id === "copy-hotline") {
+      var val = copyBtn.getAttribute("data-copy-value") || (data.hotline || "+84-327-000-272");
+      copyText(val).then(function (ok) {
+        if (ok) {
+          flashBtn(copyBtn, "Copied ✓");
+          toast("Hotline copied");
+        } else {
+          toast("Copy failed. Please copy manually.");
+        }
+      });
+      return;
+    }
     if (copyBtn && copyBtn.closest(".link-card")) {
       var card = copyBtn.closest(".link-card");
       var link = data.links[Number(card.getAttribute("data-link-index"))];

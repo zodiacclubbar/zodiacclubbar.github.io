@@ -3,6 +3,7 @@ window.ZODIAC = {
   name: "ZODIAC CLUB BAR",
   tagline: "Menu & Official Links",
   pageUrl: "https://zodiacclubbar.github.io/",
+  hotline: "+84-327-000-272",
   menu: [
     { src: "menu/01-premium-combo.jpg", title: "PREMIUM COMBO", category: "combo" },
     { src: "menu/02-bottle-combo.jpg", title: "BOTTLE COMBO", category: "combo" },
