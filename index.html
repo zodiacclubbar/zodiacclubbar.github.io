@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ZODIAC CLUB BAR — Menu & Official Links</title>
+  <meta name="description" content="View our 14-page menu, Google Maps, Instagram & TikTok.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://zodiacclubbar.github.io/">
+  <meta property="og:title" content="ZODIAC CLUB BAR — Menu & Official Links">
+  <meta property="og:description" content="View our 14-page menu, Google Maps, Instagram & TikTok.">
+  <meta property="og:image" content="https://zodiacclubbar.github.io/og-card.jpg">
+  <meta property="og:image:secure_url" content="https://zodiacclubbar.github.io/og-card.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ZODIAC CLUB BAR — Menu & Official Links">
+  <meta name="twitter:description" content="View our 14-page menu, Google Maps, Instagram & TikTok.">
+  <meta name="twitter:image" content="https://zodiacclubbar.github.io/og-card.jpg">
+  <meta name="theme-color" content="#0B0B0F">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="theme-bar">
+  <div class="hero-backdrop" aria-hidden="true"></div>
+  <div class="glow" aria-hidden="true"></div>
+  <main class="page">
+    <header class="hero">
+      <h1 class="brand" data-brand></h1>
+      <p class="tagline" data-tagline>Menu & Official Links</p>
+      <div class="hero-rule" aria-hidden="true"></div>
+    </header>
+
+    <button type="button" class="menu-btn" id="menu-btn">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1.2l1.2-2h6.2l1.2 2h1.2A2.5 2.5 0 0 1 20 8.5v8A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5v-8z"/>
+  <circle cx="12" cy="12.2" r="3.2"/>
+</svg>
+      <span class="label">
+        <span class="ko">Menu</span>
+        <span class="en" data-menu-meta>MENU</span>
+      </span>
+    </button>
+
+    <h2 class="section-label">Official Links</h2>
+    <section class="links" id="links"></section>
+
+    <section class="share">
+      <p>This is the same link as the QR code. Copy and share it anywhere.</p>
+      <button type="button" class="share-btn" id="share-copy">Copy Page Link</button>
+      <p class="page-url" data-page-url></p>
+    </section>
+
+    <p class="footer" data-brand></p>
+  </main>
+
+  <div class="modal" id="menu-modal" role="dialog" aria-modal="true" aria-labelledby="menu-title">
+    <div class="modal-head">
+      <div class="modal-row">
+        <h2 class="modal-title" id="menu-title">ZODIAC MENU</h2>
+        <button type="button" class="close-btn" id="close-menu" aria-label="Close">✕</button>
+      </div>
+      <div class="chips" id="chips"></div>
+    </div>
+    <div class="gallery" id="gallery"></div>
+  </div>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+    <div class="lightbox-bar">
+      <span id="lb-cap"></span>
+      <button type="button" class="close-btn" id="lb-close" aria-label="Close">✕</button>
+    </div>
+    <div class="lightbox-stage" id="lb-stage">
+      <button type="button" class="lightbox-nav prev" id="lb-prev" aria-label="Previous">‹</button>
+      <img id="lb-img" alt="">
+      <button type="button" class="lightbox-nav next" id="lb-next" aria-label="Next">›</button>
+    </div>
+    <div class="lightbox-tools">
+      <button type="button" class="tool-btn" id="lb-zoom">Zoom</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
