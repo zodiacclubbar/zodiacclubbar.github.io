@@ -656,7 +656,7 @@ body.theme-bar { position: relative; }
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  touch-action: pan-y;
+  touch-action: none;
 }
 
 .lightbox-stage img {
@@ -668,12 +668,7 @@ body.theme-bar { position: relative; }
   -webkit-user-select: none;
 }
 
-.lightbox-stage.is-zoomed img {
-  transform: scale(2);
-  cursor: zoom-out;
-}
-
-.lightbox-stage:not(.is-zoomed) img { cursor: zoom-in; }
+.lightbox-stage img { transform-origin: center center; will-change: transform; -webkit-user-drag: none; }
 
 .lightbox-nav {
   position: absolute;
@@ -758,4 +753,11 @@ body.theme-bar { position: relative; }
 
 .menu-btn + .event-btn {
   margin-top: 12px;
+}
+
+.zoom-hint {
+  color: rgba(255,255,255,0.55);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }

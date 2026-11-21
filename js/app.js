@@ -274,14 +274,14 @@
     if (lbImg.getAttribute("src") !== it.src) lbImg.src = it.src;
     lbImg.alt = it.title;
     lbCap.textContent = it.title + "  ·  " + (index + 1) + " / " + items.length;
-    lbStage.classList.remove("is-zoomed");
+    if (window.__resetZoom) window.__resetZoom();
     lightbox.classList.add("is-open");
     document.body.classList.add("no-scroll");
   }
 
   function hideLightbox() {
     lightbox.classList.remove("is-open");
-    lbStage.classList.remove("is-zoomed");
+    if (window.__resetZoom) window.__resetZoom();
   }
 
   function requestClose() {
@@ -328,16 +328,6 @@
   $("#lb-close") && $("#lb-close").addEventListener("click", requestClose);
   $("#lb-prev") && $("#lb-prev").addEventListener("click", function (e) { e.stopPropagation(); step(-1); });
   $("#lb-next") && $("#lb-next").addEventListener("click", function (e) { e.stopPropagation(); step(1); });
-  $("#lb-zoom") && $("#lb-zoom").addEventListener("click", function () {
-    lbStage.classList.toggle("is-zoomed");
-  });
-  if (lbImg) {
-    lbImg.addEventListener("click", function (e) {
-      e.stopPropagation();
-      lbStage.classList.toggle("is-zoomed");
-    });
-  }
-
   function step(dir) {
     var items = list();
     if (!items.length) return;
@@ -347,22 +337,95 @@
     history.replaceState({ layer: "lightbox", index: next, mode: mode }, "", (mode === "events" ? "#event-" : "#photo-") + (next + 1));
   }
 
-  /* swipe */
-  var startX = 0, startY = 0, tracking = false;
+  /* pinch-zoom, pan, double-tap, swipe */
+  var zs = { scale: 1, x: 0, y: 0 };
+  function applyZoom(animate) {
+    lbImg.style.transition = animate ? "transform 0.2s ease" : "none";
+    lbImg.style.transform = "translate(" + zs.x + "px," + zs.y + "px) scale(" + zs.scale + ")";
+  }
+  function clampPan() {
+    var w = lbImg.offsetWidth, h = lbImg.offsetHeight;
+    var sw = lbStage.clientWidth, sh = lbStage.clientHeight;
+    var mx = Math.max(0, (w * zs.scale - sw) / 2), my = Math.max(0, (h * zs.scale - sh) / 2);
+    zs.x = Math.min(mx, Math.max(-mx, zs.x));
+    zs.y = Math.min(my, Math.max(-my, zs.y));
+  }
+  window.__resetZoom = function () { zs.scale = 1; zs.x = 0; zs.y = 0; if (lbImg) applyZoom(false); };
+  function dist(a, b) { return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY); }
+  function mid(a, b) { return { x: (a.clientX + b.clientX) / 2, y: (a.clientY + b.clientY) / 2 }; }
+  function stageCenter() { var r = lbStage.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }
+  function zoomAt(newScale, px, py) {
+    newScale = Math.min(5, Math.max(1, newScale));
+    var c = stageCenter();
+    var ox = px - c.x, oy = py - c.y;
+    zs.x = ox - (ox - zs.x) * (newScale / zs.scale);
+    zs.y = oy - (oy - zs.y) * (newScale / zs.scale);
+    zs.scale = newScale;
+    if (zs.scale <= 1.01) { zs.scale = 1; zs.x = 0; zs.y = 0; }
+    clampPan();
+  }
   if (lbStage) {
+    var g = null, lastTap = 0, swipeStart = null, moved = false;
     lbStage.addEventListener("touchstart", function (e) {
-      if (lbStage.classList.contains("is-zoomed")) return;
-      var t = e.changedTouches[0];
-      startX = t.clientX; startY = t.clientY; tracking = true;
+      var t = e.touches;
+      if (t.length === 2) {
+        g = { type: "pinch", d: dist(t[0], t[1]), s: zs.scale, m: mid(t[0], t[1]) };
+        swipeStart = null;
+      } else if (t.length === 1) {
+        moved = false;
+        if (zs.scale > 1) g = { type: "pan", sx: t[0].clientX, sy: t[0].clientY, x: zs.x, y: zs.y };
+        else { g = null; swipeStart = { x: t[0].clientX, y: t[0].clientY }; }
+      }
     }, { passive: true });
+    lbStage.addEventListener("touchmove", function (e) {
+      var t = e.touches;
+      if (g && g.type === "pinch" && t.length === 2) {
+        e.preventDefault();
+        var m = mid(t[0], t[1]);
+        zoomAt(g.s * dist(t[0], t[1]) / g.d, m.x, m.y);
+        applyZoom(false);
+        moved = true;
+      } else if (g && g.type === "pan" && t.length === 1) {
+        e.preventDefault();
+        zs.x = g.x + (t[0].clientX - g.sx);
+        zs.y = g.y + (t[0].clientY - g.sy);
+        clampPan();
+        applyZoom(false);
+        moved = true;
+      } else if (swipeStart && t.length === 1) {
+        if (Math.abs(t[0].clientX - swipeStart.x) > 8) { e.preventDefault(); moved = true; }
+      }
+    }, { passive: false });
     lbStage.addEventListener("touchend", function (e) {
-      if (!tracking) return;
-      tracking = false;
-      var t = e.changedTouches[0];
-      var dx = t.clientX - startX;
-      var dy = t.clientY - startY;
-      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) step(dx < 0 ? 1 : -1);
-    }, { passive: true });
+      var ct = e.changedTouches[0];
+      if (e.touches.length === 0) {
+        if (swipeStart && zs.scale === 1) {
+          var dx = ct.clientX - swipeStart.x, dy = ct.clientY - swipeStart.y;
+          if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) { swipeStart = null; g = null; step(dx < 0 ? 1 : -1); return; }
+        }
+        if (!moved) {
+          var now = Date.now();
+          if (now - lastTap < 300) {
+            if (zs.scale > 1) { zs.scale = 1; zs.x = 0; zs.y = 0; } else zoomAt(2.5, ct.clientX, ct.clientY);
+            applyZoom(true);
+            lastTap = 0;
+          } else lastTap = now;
+        }
+        g = null; swipeStart = null;
+      } else if (e.touches.length === 1 && zs.scale > 1) {
+        var t1 = e.touches[0];
+        g = { type: "pan", sx: t1.clientX, sy: t1.clientY, x: zs.x, y: zs.y };
+      }
+    });
+    lbStage.addEventListener("dblclick", function (e) {
+      if (zs.scale > 1) { zs.scale = 1; zs.x = 0; zs.y = 0; } else zoomAt(2.5, e.clientX, e.clientY);
+      applyZoom(true);
+    });
+    lbStage.addEventListener("wheel", function (e) {
+      e.preventDefault();
+      zoomAt(zs.scale * (e.deltaY < 0 ? 1.15 : 1 / 1.15), e.clientX, e.clientY);
+      applyZoom(false);
+    }, { passive: false });
   }
 
   document.addEventListener("keydown", function (e) {
