@@ -15,6 +15,7 @@ window.ZODIAC = {
     { src: "menu/08-champagne-sparkling.jpg", title: "CHAMPAGNE & SPARKLING", category: "spirits" },
     { src: "menu/09-classic-cocktail.jpg", title: "CLASSIC COCKTAIL", category: "cocktail" },
     { src: "menu/10-mocktail-soft-drinks.jpg", title: "MOCKTAIL · SOFT DRINKS", category: "cocktail" },
+    { src: "menu/15-shooter-soju-beer.jpg", title: "SHOOTER · SOJU · BEER", category: "cocktail" },
     { src: "menu/11-starters-bar-bites.jpg", title: "STARTERS · BAR BITES", category: "food" },
     { src: "menu/12-mains.jpg", title: "MAINS", category: "food" },
     { src: "menu/13-pasta-spaghetti.jpg", title: "PASTA & SPAGHETTI", category: "food" },
