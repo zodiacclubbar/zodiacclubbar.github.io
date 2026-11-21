@@ -4,6 +4,10 @@ window.ZODIAC = {
   tagline: "Menu & Official Links",
   pageUrl: "https://zodiacclubbar.github.io/",
   hotline: "+84-327-000-272",
+  events: [
+    { src: "events/01-upcoming-schedule.jpg", title: "UPCOMING SCHEDULE" },
+    { src: "events/02-ladies-paradise.jpg", title: "LADIES PARADISE · EVERY WEDNESDAY" }
+  ],
   menu: [
     { src: "menu/01-premium-combo.jpg", title: "PREMIUM COMBO", category: "combo" },
     { src: "menu/02-bottle-combo.jpg", title: "BOTTLE COMBO", category: "combo" },

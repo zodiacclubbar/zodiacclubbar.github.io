@@ -755,3 +755,7 @@ body.theme-bar { position: relative; }
 .hotline-card + .menu-btn {
   margin-top: 14px;
 }
+
+.menu-btn + .event-btn {
+  margin-top: 12px;
+}

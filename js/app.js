@@ -72,6 +72,8 @@
   $$("[data-tagline]").forEach(function (el) { el.textContent = data.tagline || "Menu & Official Links"; });
 
   var menuCount = (data.menu && data.menu.length) || 0;
+  var eventMeta = $("[data-event-meta]");
+  if (eventMeta) eventMeta.textContent = "UPCOMING SCHEDULE";
   var menuMeta = $("[data-menu-meta]");
   if (menuMeta) {
     menuMeta.textContent = menuCount ? (menuCount + " Photos") : "Coming Soon";
@@ -175,24 +177,35 @@
   var visible = [];
   var currentIndex = 0;
   var currentLayer = "none";
+  var mode = "menu";
+  var menuTitle = $("#menu-title");
+  function list() { return mode === "events" ? (data.events || []) : (data.menu || []); }
+  function setMode(m) {
+    if (m === mode) return;
+    mode = m;
+    galleryBuilt = false;
+    filter = "all";
+    if (menuTitle) menuTitle.textContent = m === "events" ? "ZODIAC EVENTS" : "ZODIAC MENU";
+    if (chips) chips.style.display = m === "events" ? "none" : "";
+  }
 
   function visibleItems() {
-    var items = data.menu || [];
-    if (filter === "all") return items.slice();
+    var items = list();
+    if (filter === "all" || mode === "events") return items.slice();
     return items.filter(function (it) { return it.category === filter; });
   }
 
   function buildGallery() {
     if (galleryBuilt) return;
     galleryBuilt = true;
-    var items = data.menu || [];
+    var items = list();
     if (!items.length) {
       gallery.innerHTML =
         '<div class="placeholder"><strong>Menu photos coming soon.</strong></div>';
       if (chips) chips.style.display = "none";
       return;
     }
-    if (chips && data.categories) {
+    if (chips && data.categories && mode !== "events") {
       chips.innerHTML = data.categories.map(function (c, i) {
         var count = c.id === "all" ? items.length : items.filter(function (it) { return it.category === c.id; }).length;
         return '<button type="button" class="chip' + (i === 0 ? " is-active" : "") + '" data-filter="' + c.id + '">' +
@@ -203,7 +216,7 @@
   }
 
   function renderGallery() {
-    var items = data.menu || [];
+    var items = list();
     if (!items.length) return;
     visible = visibleItems();
     gallery.innerHTML = visible.map(function (it) {
@@ -234,9 +247,9 @@
     }
     currentLayer = layer || "none";
     if (push) {
-      var hash = layer === "lightbox" ? ("#photo-" + (index + 1)) : layer === "menu" ? "#menu" : location.pathname + location.search;
+      var hash = layer === "lightbox" ? ((mode === "events" ? "#event-" : "#photo-") + (index + 1)) : layer === "menu" ? (mode === "events" ? "#events" : "#menu") : location.pathname + location.search;
       var url = layer === "none" ? (location.pathname + location.search) : hash;
-      history.pushState({ layer: layer || "none", index: index || 0 }, "", url);
+      history.pushState({ layer: layer || "none", index: index || 0, mode: mode }, "", url);
     }
   }
 
@@ -254,7 +267,7 @@
   }
 
   function showLightbox(index) {
-    var items = data.menu || [];
+    var items = list();
     if (!items[index]) return;
     currentIndex = index;
     var it = items[index];
@@ -279,7 +292,14 @@
   var menuBtn = $("#menu-btn");
   if (menuBtn) {
     menuBtn.addEventListener("click", function () {
-      if (currentLayer === "none") applyLayer("menu", 0, true);
+      if (currentLayer === "none") { setMode("menu"); applyLayer("menu", 0, true); }
+    });
+  }
+
+  var eventBtn = $("#event-btn");
+  if (eventBtn) {
+    eventBtn.addEventListener("click", function () {
+      if (currentLayer === "none") { setMode("events"); applyLayer("menu", 0, true); }
     });
   }
 
@@ -319,12 +339,12 @@
   }
 
   function step(dir) {
-    var items = data.menu || [];
+    var items = list();
     if (!items.length) return;
     var next = (currentIndex + dir + items.length) % items.length;
     currentIndex = next;
     showLightbox(next);
-    history.replaceState({ layer: "lightbox", index: next }, "", "#photo-" + (next + 1));
+    history.replaceState({ layer: "lightbox", index: next, mode: mode }, "", (mode === "events" ? "#event-" : "#photo-") + (next + 1));
   }
 
   /* swipe */
@@ -357,6 +377,7 @@
   window.addEventListener("popstate", function (e) {
     var state = e.state || {};
     var layer = state.layer || "none";
+    if (layer !== "none") setMode(state.mode || "menu");
     if (layer === "lightbox") {
       if (!modal.classList.contains("is-open")) openMenu(false);
       showLightbox(state.index || 0);
@@ -380,6 +401,19 @@
       openMenu(false);
       showLightbox(i);
       currentLayer = "lightbox";
+    } else if (hash.indexOf("#event-") === 0 && data.events && data.events.length) {
+      setMode("events");
+      var j = parseInt(hash.slice(7), 10) - 1;
+      if (isNaN(j) || j < 0 || j >= data.events.length) j = 0;
+      history.replaceState({ layer: "lightbox", index: j, mode: "events" }, "", "#event-" + (j + 1));
+      openMenu(false);
+      showLightbox(j);
+      currentLayer = "lightbox";
+    } else if (hash === "#events") {
+      setMode("events");
+      history.replaceState({ layer: "menu", index: 0, mode: "events" }, "", "#events");
+      openMenu(false);
+      currentLayer = "menu";
     } else if (hash === "#menu") {
       history.replaceState({ layer: "menu", index: 0 }, "", "#menu");
       openMenu(false);
