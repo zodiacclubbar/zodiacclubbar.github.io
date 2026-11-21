@@ -5,6 +5,7 @@ window.ZODIAC = {
   pageUrl: "https://zodiacclubbar.github.io/",
   hotline: "+84-327-000-272",
   events: [
+    { src: "events/00-aespa-party-2026-11-22.jpg", title: "AESPA PARTY · SUN 22.11.26" },
     { src: "events/01-upcoming-schedule.jpg", title: "UPCOMING SCHEDULE" },
     { src: "events/02-ladies-paradise.jpg", title: "LADIES PARADISE · EVERY WEDNESDAY" }
   ],
