@@ -215,6 +215,18 @@
     renderGallery();
   }
 
+  function cardDescHtml(it) {
+    var desc = it && it.desc;
+    var en = desc && desc.en ? String(desc.en) : "";
+    var vi = desc && desc.vi ? String(desc.vi) : "";
+    if (!en && !vi) return "";
+    var html = '<div class="gallery-desc">';
+    if (en) html += '<div class="lb-desc-row"><span class="lb-lang">EN</span><p class="lb-desc-text">' + escapeHtml(en) + "</p></div>";
+    if (vi) html += '<div class="lb-desc-row"><span class="lb-lang">VI</span><p class="lb-desc-text">' + escapeHtml(vi) + "</p></div>";
+    html += "</div>";
+    return html;
+  }
+
   function renderGallery() {
     var items = list();
     if (!items.length) return;
@@ -224,8 +236,11 @@
       return (
         '<figure class="gallery-item" data-index="' + abs + '">' +
           '<img alt="' + escapeAttr(it.title) + '" data-src="' + escapeAttr(it.src) + '" />' +
-          '<figcaption class="gallery-cap"><span class="ttl">' + escapeHtml(it.title) + "</span>" +
-          '<span class="idx">' + (abs + 1) + " / " + items.length + "</span></figcaption>" +
+          '<figcaption class="gallery-cap">' +
+            '<div class="gallery-cap-row"><span class="ttl">' + escapeHtml(it.title) + "</span>" +
+            '<span class="idx">' + (abs + 1) + " / " + items.length + "</span></div>" +
+            cardDescHtml(it) +
+          "</figcaption>" +
         "</figure>"
       );
     }).join("");

@@ -594,14 +594,29 @@ body.theme-bar { position: relative; }
 
 .gallery-cap {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   padding: 10px 12px 12px;
   font-size: 0.8rem;
 }
 
+.gallery-cap-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
 .gallery-cap .ttl { font-weight: 700; }
-.gallery-cap .idx { color: var(--muted); font-variant-numeric: tabular-nums; }
+.gallery-cap .idx { color: var(--muted); font-variant-numeric: tabular-nums; flex-shrink: 0; }
+
+.gallery-desc {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(234, 98, 0, 0.38);
+  background:
+    linear-gradient(180deg, rgba(234, 98, 0, 0.16), rgba(20, 20, 28, 0.92));
+}
 
 .placeholder {
   margin: 48px 16px;

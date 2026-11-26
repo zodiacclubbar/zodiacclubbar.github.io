@@ -9,8 +9,8 @@ window.ZODIAC = {
       src: "events/03-no-limit-night.jpg",
       title: "NO LIMIT NIGHT · EVERY THURSDAY",
       desc: {
-        en: "Every Thursday is NO LIMIT NIGHT at ZODIAC SOCIAL CLUB. Buy 1 Get 1 on all drinks on the menu, plus live sexy dance performances by our two dancers. Book your table now!",
-        vi: "Thứ Năm hàng tuần là NO LIMIT NIGHT tại ZODIAC SOCIAL CLUB. Mua 1 tặng 1 cho tất cả đồ uống trong menu, cùng màn trình diễn sexy dance sôi động của hai vũ công. Đặt bàn ngay!"
+        en: "Every Thursday is NO LIMIT NIGHT at ZODIAC SOCIAL CLUB. Buy 1 Get 1 on all drinks on the menu, plus live sexy dance performances by our two dancers.",
+        vi: "Thứ Năm hàng tuần là NO LIMIT NIGHT tại ZODIAC SOCIAL CLUB. Mua 1 tặng 1 cho tất cả đồ uống trong menu, cùng màn trình diễn sexy dance sôi động của hai vũ công."
       }
     },
     { src: "events/01-upcoming-schedule.jpg", title: "UPCOMING SCHEDULE" },
