@@ -1,6 +1,6 @@
 window.ZODIAC = {
   venue: "bar",
-  name: "ZODIAC CLUB BAR",
+  name: "ZODIAC SOCIAL CLUB",
   tagline: "Menu & Official Links",
   pageUrl: "https://zodiacclubbar.github.io/",
   hotline: "+84-327-000-272",
