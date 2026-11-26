@@ -837,3 +837,10 @@ body.theme-bar { position: relative; }
 .closed-notice .cn-label{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#ff8a8a;font-weight:700}
 .closed-notice .cn-title{font-size:17px;color:#fff;font-weight:800}
 .closed-notice .cn-sub{font-size:13px;color:rgba(255,255,255,.78)}
+
+/* Full-width descriptions (no side gutters) */
+.gallery-desc{margin:10px -12px -12px;padding:10px 12px 12px;border-radius:0;background:none;border-top:1px solid rgba(255,255,255,.08)}
+.lightbox-desc{margin:0 0 6px;border-radius:0;background:rgba(20,20,28,.92);box-shadow:none;padding:12px 14px}
+.lb-desc-row{display:block}
+.lb-desc-row .lb-lang{display:inline-block;padding:3px 7px;margin:0 0 6px}
+.lb-desc-text{width:100%}
