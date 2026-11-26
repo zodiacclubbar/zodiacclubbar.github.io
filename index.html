@@ -26,7 +26,7 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap">
-  <link rel="stylesheet" href="css/style.css?v=20261123closed">
+  <link rel="stylesheet" href="css/style.css?v=20261127nolimit">
 </head>
 <body class="theme-bar">
   <div class="hero-backdrop" aria-hidden="true"></div>
@@ -107,13 +107,23 @@
       <img id="lb-img" alt="">
       <button type="button" class="lightbox-nav next" id="lb-next" aria-label="Next">›</button>
     </div>
+    <div class="lightbox-desc" id="lb-desc" hidden>
+      <div class="lb-desc-row" id="lb-desc-row-en" hidden>
+        <span class="lb-lang">EN</span>
+        <p class="lb-desc-text" id="lb-desc-en"></p>
+      </div>
+      <div class="lb-desc-row" id="lb-desc-row-vi" hidden>
+        <span class="lb-lang">VI</span>
+        <p class="lb-desc-text" id="lb-desc-vi"></p>
+      </div>
+    </div>
     <div class="lightbox-tools">
       <span class="zoom-hint">Pinch or double-tap to zoom</span>
     </div>
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="data.js?v=20261127noaespa"></script>
-  <script src="js/app.js?v=20261121pinch"></script>
+  <script src="data.js?v=20261127nolimit"></script>
+  <script src="js/app.js?v=20261127nolimit"></script>
 </body>
 </html>

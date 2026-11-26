@@ -266,6 +266,23 @@
     if (!lightbox.classList.contains("is-open")) document.body.classList.remove("no-scroll");
   }
 
+  var lbDesc = $("#lb-desc");
+  var lbDescEn = $("#lb-desc-en");
+  var lbDescVi = $("#lb-desc-vi");
+  var lbDescRowEn = $("#lb-desc-row-en");
+  var lbDescRowVi = $("#lb-desc-row-vi");
+
+  function setDesc(it) {
+    var desc = it && it.desc;
+    var en = desc && desc.en ? String(desc.en) : "";
+    var vi = desc && desc.vi ? String(desc.vi) : "";
+    if (lbDescEn) lbDescEn.textContent = en;
+    if (lbDescVi) lbDescVi.textContent = vi;
+    if (lbDescRowEn) lbDescRowEn.hidden = !en;
+    if (lbDescRowVi) lbDescRowVi.hidden = !vi;
+    if (lbDesc) lbDesc.hidden = !en && !vi;
+  }
+
   function showLightbox(index) {
     var items = list();
     if (!items[index]) return;
@@ -274,6 +291,7 @@
     if (lbImg.getAttribute("src") !== it.src) lbImg.src = it.src;
     lbImg.alt = it.title;
     lbCap.textContent = it.title + "  ·  " + (index + 1) + " / " + items.length;
+    setDesc(it);
     if (window.__resetZoom) window.__resetZoom();
     lightbox.classList.add("is-open");
     document.body.classList.add("no-scroll");
