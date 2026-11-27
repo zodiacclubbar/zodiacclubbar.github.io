@@ -844,3 +844,9 @@ body.theme-bar { position: relative; }
 .lb-desc-row{display:block}
 .lb-desc-row .lb-lang{display:inline-block;padding:3px 7px;margin:0 0 6px}
 .lb-desc-text{width:100%}
+
+/* Orange accent for full-width descriptions */
+.gallery-desc{background:linear-gradient(180deg,rgba(234,98,0,.22),rgba(234,98,0,.06));border-top:2px solid #ea6200}
+.lightbox-desc{background:linear-gradient(180deg,rgba(234,98,0,.24),rgba(20,20,28,.92));border-top:2px solid #ea6200}
+.lb-desc-row .lb-lang{background:#ea6200;color:#fff}
+.lb-desc-row + .lb-desc-row:not([hidden]){border-top-color:rgba(234,98,0,.3)}
